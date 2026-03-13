@@ -2,21 +2,21 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { SerwistProvider } from './serwist'
 
-const APP_NAME = 'Next 16 Codebase'
-const APP_DEFAULT_TITLE = 'My PWA'
-const APP_TITLE_TEMPLATE = '%s - Next 16 Codebase'
-const APP_DESCRIPTION = 'Next 16 Codebase'
+const appName = process.env.APP_NAME!
+const appDefaultTitle = process.env.APP_DEFAULT_TITLE!
+const appTitleTemplate = process.env.APP_TITLE_TEMPLATE!
+const appDescription = process.env.APP_DESCRIPTION!
 
 export const metadata: Metadata = {
-  applicationName: APP_NAME,
+  applicationName: appName,
   title: {
-    default: APP_DEFAULT_TITLE,
-    template: APP_TITLE_TEMPLATE,
+    default: appDefaultTitle,
+    template: appTitleTemplate,
   },
-  description: APP_DESCRIPTION,
+  description: appDescription,
   appleWebApp: {
     capable: true,
-    title: APP_DEFAULT_TITLE,
+    title: appDefaultTitle,
     statusBarStyle: 'default',
   },
   formatDetection: {
@@ -24,20 +24,20 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    siteName: APP_NAME,
+    siteName: appName,
     title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
+      default: appDefaultTitle,
+      template: appTitleTemplate,
     },
-    description: APP_DESCRIPTION,
+    description: appDescription,
   },
   twitter: {
     card: 'summary',
     title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
+      default: appDefaultTitle,
+      template: appTitleTemplate,
     },
-    description: APP_DESCRIPTION,
+    description: appDescription,
   },
 }
 
