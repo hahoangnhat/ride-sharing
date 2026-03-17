@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { SerwistProvider } from './serwist'
+import { Figtree } from 'next/font/google'
+import { cn } from '@/utils'
+
+const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' })
 
 const appName = process.env.APP_NAME!
 const appDefaultTitle = process.env.APP_DEFAULT_TITLE!
@@ -51,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html>
+    <html className={cn('font-sans', figtree.variable)}>
       <body>
         <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
       </body>

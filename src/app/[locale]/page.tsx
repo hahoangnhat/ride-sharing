@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { use } from 'react'
@@ -20,7 +21,12 @@ const Home = ({ params }: Props) => {
 
   const t = useTranslations('common')
 
-  return <h1>{t('say_hello')}</h1>
+  return (
+    <div>
+      <Button>Click me</Button>
+      <h1>{t('say_hello')}</h1>
+    </div>
+  )
 }
 
 export default Home
