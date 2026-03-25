@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WeList
+
+A Next.js 16 (App Router) + React 19 starter with TypeScript, Tailwind CSS v4, i18n, Storybook, and PWA support.
+
+## Tech Stack
+
+| Category      | Tech                                          |
+| ------------- | --------------------------------------------- |
+| Framework     | Next.js 16.1.6, React 19.2.3                  |
+| Language      | TypeScript 5 (strict mode)                    |
+| Styling       | Tailwind CSS v4 + shadcn/ui (base-maia style) |
+| UI Primitives | @base-ui/react                                |
+| Icons         | @hugeicons/react                              |
+| i18n          | next-intl                                     |
+| Validation    | Zod                                           |
+| Testing       | Vitest + Playwright + Storybook               |
+| Docs          | Storybook                                     |
+| PWA           | Serwist                                       |
+| Linting       | ESLint (flat config)                          |
+| Formatting    | Prettier + Tailwind Prettier plugin           |
+| Git hooks     | Husky + lint-staged                           |
+| Claude Code   | MCP for shadcn + agent skills                 |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Start dev server
 pnpm dev
-# or
-bun dev
+
+# Open http://localhost:3000/en
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> **Note:** This project uses locale-based routing via next-intl. The root `/` redirects to `/en`. Supported locales: `en`, `vi`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm dev          # Start dev server
+pnpm build        # Production build
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+pnpm format       # Format all files with Prettier
+pnpm storybook    # Start Storybook on :6006
+pnpm build-storybook  # Build static Storybook
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                  # Next.js App Router pages & layouts
+│   ├── [locale]/         # Locale-routed pages (en, vi)
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── layout.tsx        # Root layout (Serwist, fonts, metadata)
+│   ├── globals.css       # Tailwind v4 CSS with design tokens
+│   └── sw.ts             # Service worker source
+├── components/
+│   ├── ui/               # shadcn/ui components
+│   └── index.ts
+├── utils/
+│   └── cn.ts             # clsx + tailwind-merge
+├── i18n/                 # next-intl config
+│   ├── routing.ts
+│   ├── request.ts
+│   └── navigation.ts
+├── types/                # TypeScript types
+├── schemas/              # Zod schemas
+├── modules/              # Feature modules
+├── constants/            # Constants
+├── stories/              # Storybook stories
+messages/                 # i18n translation files
+  ├── en/
+  └── vi/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### i18n (next-intl)
 
-## Deploy on Vercel
+- Supported locales: `en`, `vi`
+- Translations in `messages/{locale}/`
+- Use `next-intl/navigation` for locale-aware links
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### shadcn/ui
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Components managed via `shadcn` CLI
+- Style: `base-maia`, icons: `@hugeicons/react`
+- Add new components:
+  ```bash
+  npx shadcn add button
+  ```
+
+### Storybook
+
+- Run: `pnpm storybook`
+- Addons: a11y, chromatic (visual regression), vitest, docs
+- Stories in `src/**/*.stories.tsx`
+
+### PWA (Serwist)
+
+- Service worker in `src/sw.ts`
+- Manifest in `src/manifest.json`
+- Configured in `next.config.ts`
+
+### Pre-commit Hooks
+
+- Husky runs `lint-staged` on staged files
+- ESLint + Prettier format on commit
+- Hook setup runs automatically via `prepare` script
+
+## Environment Variables
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable             | Description                      |
+| -------------------- | -------------------------------- |
+| `APP_NAME`           | App name                         |
+| `APP_DEFAULT_TITLE`  | Default page title               |
+| `APP_TITLE_TEMPLATE` | Title template (%s = page title) |
+| `APP_DESCRIPTION`    | Meta description                 |
+
+## Environment Setup
+
+This project uses **pnpm**. Install it if you haven't:
+
+```bash
+npm install -g pnpm
+```
