@@ -102,9 +102,11 @@ messages/                 # i18n translation files
 
 ### PWA (Serwist)
 
-- Service worker in `src/sw.ts`
-- Manifest in `src/manifest.json`
+- Service worker in `src/app/sw.ts`
+- Manifest in `src/app/manifest.ts` (served at `/manifest.webmanifest`)
+- Offline fallback page at `src/app/[locale]/~offline/page.tsx`
 - Configured in `next.config.ts`
+- PWA features (precache, offline fallback) only activate in production builds (`pnpm build && pnpm start`)
 
 ### Pre-commit Hooks
 

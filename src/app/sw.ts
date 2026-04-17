@@ -22,7 +22,15 @@ const serwist = new Serwist({
   fallbacks: {
     entries: [
       {
-        url: '/~offline',
+        url: '/vi/~offline',
+        matcher({ request }) {
+          return (
+            request.destination === 'document' && new URL(request.url).pathname.startsWith('/vi')
+          )
+        },
+      },
+      {
+        url: '/en/~offline',
         matcher({ request }) {
           return request.destination === 'document'
         },

@@ -13,6 +13,7 @@ const appDescription = process.env.APP_DESCRIPTION!
 
 export const metadata: Metadata = {
   applicationName: appName,
+  manifest: '/manifest.webmanifest',
   title: {
     default: appDefaultTitle,
     template: appTitleTemplate,
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#fff',
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({
@@ -55,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html className={cn('font-sans', figtree.variable)}>
+    <html lang="en" className={cn('font-sans', figtree.variable)}>
       <body>
         <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
       </body>
