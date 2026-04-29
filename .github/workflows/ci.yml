@@ -1,4 +1,4 @@
-name: CI
+name: Build and Test
 
 on:
   push:
@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   format:
-    name: Format Check
+    name: Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -77,8 +77,8 @@ jobs:
       - name: Type check
         run: pnpm tsc --noEmit
 
-  docker:build:dev:
-    name: Docker Build (Dev)
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
