@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { useTranslations } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { use } from 'react'
+import { connection } from 'next/server'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -15,11 +14,13 @@ export const generateMetadata = async ({ params }: Props) => {
   }
 }
 
-const Home = ({ params }: Props) => {
-  const { locale } = use(params)
-  setRequestLocale(locale)
+const Home = async ({ params }: Props) => {
+  // Force dynamic rendering for nonce-based CSP
+  await connection()
 
-  const t = useTranslations('common')
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'common' })
 
   return (
     <div>
