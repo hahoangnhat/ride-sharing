@@ -33,7 +33,6 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  output: 'standalone',
   crossOrigin: 'anonymous',
   async headers() {
     return [
