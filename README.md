@@ -1,12 +1,12 @@
 # WeList
 
-A Next.js 16 (App Router) + React 19 starter with TypeScript, Tailwind CSS v4, i18n, Storybook, and PWA support.
+A Next.js 16 starter with React 19, TypeScript, Tailwind CSS v4, i18n, Storybook, and PWA support.
 
 ## Tech Stack
 
 | Category      | Tech                                          |
-| ------------- | --------------------------------------------- |
-| Framework     | Next.js 16.1.6, React 19.2.3                  |
+| :------------ | :-------------------------------------------- |
+| Framework     | Next.js 16.2.4, React 19.2.5                  |
 | Language      | TypeScript 5 (strict mode)                    |
 | Styling       | Tailwind CSS v4 + shadcn/ui (base-maia style) |
 | UI Primitives | @base-ui/react                                |
@@ -19,7 +19,6 @@ A Next.js 16 (App Router) + React 19 starter with TypeScript, Tailwind CSS v4, i
 | Linting       | ESLint (flat config)                          |
 | Formatting    | Prettier + Tailwind Prettier plugin           |
 | Git hooks     | Husky + lint-staged                           |
-| Claude Code   | MCP for shadcn + agent skills                 |
 
 ## Getting Started
 
@@ -38,13 +37,15 @@ pnpm dev
 ## Scripts
 
 ```bash
-pnpm dev          # Start dev server
-pnpm build        # Production build
-pnpm start        # Start production server
-pnpm lint         # Run ESLint
-pnpm format       # Format all files with Prettier
-pnpm storybook    # Start Storybook on :6006
-pnpm build-storybook  # Build static Storybook
+pnpm dev             # Start dev server
+pnpm build           # Production build
+pnpm start           # Start production server
+pnpm typecheck       # Run TypeScript type checking
+pnpm lint            # Run ESLint
+pnpm format          # Format all files with Prettier
+pnpm storybook       # Start Storybook on :6006
+pnpm build-storybook # Build static Storybook
+pnpm clean           # Remove .next and node_modules
 ```
 
 ## Project Structure
@@ -61,6 +62,7 @@ src/
 ├── components/
 │   ├── ui/               # shadcn/ui components
 │   └── index.ts
+├── hooks/                # Custom React hooks
 ├── utils/
 │   └── cn.ts             # clsx + tailwind-merge
 ├── i18n/                 # next-intl config
@@ -71,10 +73,10 @@ src/
 ├── schemas/              # Zod schemas
 ├── modules/              # Feature modules
 ├── constants/            # Constants
-├── stories/              # Storybook stories
+└── stories/              # Storybook stories
 messages/                 # i18n translation files
-  ├── en/
-  └── vi/
+├── en/
+└── vi/
 ```
 
 ## Features
@@ -90,9 +92,10 @@ messages/                 # i18n translation files
 - Components managed via `shadcn` CLI
 - Style: `base-maia`, icons: `@hugeicons/react`
 - Add new components:
-  ```bash
-  npx shadcn add button
-  ```
+
+```bash
+npx shadcn add button
+```
 
 ### Storybook
 
@@ -114,6 +117,17 @@ messages/                 # i18n translation files
 - ESLint + Prettier format on commit
 - Hook setup runs automatically via `prepare` script
 
+## Docker
+
+```bash
+# Development
+pnpm docker:dev              # Start dev container
+pnpm docker:dev:down        # Stop dev container
+
+# Production
+pnpm docker:prod             # Build production image
+```
+
 ## Environment Variables
 
 ```bash
@@ -121,7 +135,7 @@ cp .env.example .env.local
 ```
 
 | Variable             | Description                      |
-| -------------------- | -------------------------------- |
+| :------------------- | :------------------------------- |
 | `APP_NAME`           | App name                         |
 | `APP_DEFAULT_TITLE`  | Default page title               |
 | `APP_TITLE_TEMPLATE` | Title template (%s = page title) |
