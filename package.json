@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "prepare": "husky",
+    "prepare": "husky && bash scripts/setup-supabase.sh",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
