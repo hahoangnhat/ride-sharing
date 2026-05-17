@@ -11,15 +11,9 @@ if [ ! -f "$ENV_FILE" ]; then
   [ -f ".env.example" ] && cp .env.example "$ENV_FILE" || touch "$ENV_FILE"
 fi
 
-# Check CLI
-if ! command -v supabase &> /dev/null; then
-  echo -e "${YELLOW}!${NC} Supabase CLI not found. Install: npm install -g supabase"
-  exit 0
-fi
-
-# Start supabase if not running (with 60s timeout)
+# Start supabase
 echo -e "${GREEN}→${NC} Starting Supabase..."
-if ! timeout 10 supabase start > /dev/null 2>&1; then
+if ! supabase start; then
   echo -e "${YELLOW}!${NC} Failed to start. Is Docker running?"
   exit 0
 fi
@@ -32,10 +26,8 @@ KEY=$(echo "$status" | grep "Publishable" | awk -F'│' '{print $3}' | xargs)
 # Write to .env (replace existing values)
 {
   grep -v "NEXT_PUBLIC_SUPABASE_" "$ENV_FILE" 2>/dev/null || true
-  echo ""
   echo "NEXT_PUBLIC_SUPABASE_URL=$URL"
   echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$KEY"
 } > "${ENV_FILE}.tmp" && mv "${ENV_FILE}.tmp" "$ENV_FILE"
 
 echo -e "${GREEN}✓${NC} Supabase configured"
-echo "  URL: $URL"
