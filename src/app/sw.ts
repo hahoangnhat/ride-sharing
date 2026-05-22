@@ -19,24 +19,15 @@ const serwist = new Serwist({
   clientsClaim: true,
   navigationPreload: true,
   runtimeCaching: defaultCache,
-  fallbacks: {
-    entries: [
-      {
-        url: '/vi/~offline',
-        matcher({ request }) {
-          return (
-            request.destination === 'document' && new URL(request.url).pathname.startsWith('/vi')
-          )
-        },
-      },
-      {
-        url: '/en/~offline',
-        matcher({ request }) {
-          return request.destination === 'document'
-        },
-      },
-    ],
-  },
+})
+
+serwist.setCatchHandler(async ({ request, url }) => {
+  if (request.destination === 'document') {
+    const offlineUrl = url.pathname.startsWith('/vi') ? '/vi/~offline' : '/en/~offline'
+    const offlineResponse = await serwist.matchPrecache(offlineUrl)
+    if (offlineResponse) return offlineResponse
+  }
+  return Response.error()
 })
 
 serwist.addEventListeners()
