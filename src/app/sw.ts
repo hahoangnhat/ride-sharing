@@ -19,6 +19,7 @@ const serwist = new Serwist({
   clientsClaim: true,
   navigationPreload: true,
   runtimeCaching: defaultCache,
+  disableDevLogs: process.env.NODE_ENV === 'production',
   fallbacks: {
     entries: [
       {
