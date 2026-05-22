@@ -5,23 +5,10 @@ import createMiddleware from 'next-intl/middleware'
 const intlMiddleware = createMiddleware(routing)
 
 export default function proxy(request: NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
-
-  const src =
-    process.env.NODE_ENV === 'development'
-      ? {
-          script: "'unsafe-eval' 'unsafe-inline'",
-          style: "'unsafe-inline'",
-        }
-      : {
-          script: `'nonce-${nonce}' 'strict-dynamic'`,
-          style: `'nonce-${nonce}'`,
-        }
-
   const cspHeader = `
     default-src 'self';
-    script-src 'self' ${src.script};
-    style-src 'self' ${src.style};
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
+    style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https:;
     font-src 'self';
     connect-src 'self';
@@ -30,6 +17,8 @@ export default function proxy(request: NextRequest) {
     form-action 'self';
     frame-ancestors 'none';
     upgrade-insecure-requests;
+    worker-src 'self' blob:;
+    manifest-src 'self';
   `
     .replace(/\s{2,}/g, ' ')
     .trim()
@@ -37,6 +26,7 @@ export default function proxy(request: NextRequest) {
   const response = intlMiddleware(request)
 
   response.headers.set('Content-Security-Policy', cspHeader)
+  response.headers.set('X-Content-Security-Policy', cspHeader)
 
   return response
 }
