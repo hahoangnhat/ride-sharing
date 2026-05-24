@@ -1,0 +1,8 @@
+{
+  "auth": {
+    "email_invalid": "Invalid email address",
+    "password_too_short": "Password must be at least 6 characters",
+    "confirm_password_required": "Please confirm your password",
+    "passwords_mismatch": "Passwords don't match"
+  }
+}

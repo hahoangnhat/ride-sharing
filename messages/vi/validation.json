@@ -1,0 +1,8 @@
+{
+  "auth": {
+    "email_invalid": "Địa chỉ email không hợp lệ",
+    "password_too_short": "Mật khẩu phải có ít nhất 6 ký tự",
+    "confirm_password_required": "Vui lòng xác nhận mật khẩu",
+    "passwords_mismatch": "Mật khẩu không khớp"
+  }
+}

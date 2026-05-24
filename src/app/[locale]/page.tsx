@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { LogoutButton } from '@/components/logout-button'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { connection } from 'next/server'
 
@@ -24,7 +24,7 @@ const Home = async ({ params }: Props) => {
 
   return (
     <div>
-      <Button>Click me</Button>
+      <LogoutButton />
       <h1>{t('say_hello')}</h1>
     </div>
   )

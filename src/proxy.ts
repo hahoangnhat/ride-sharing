@@ -1,17 +1,25 @@
 import { NextRequest } from 'next/server'
 import { routing } from './i18n/routing'
 import createMiddleware from 'next-intl/middleware'
+import { updateSession } from './lib/supabase/proxy'
 
 const intlMiddleware = createMiddleware(routing)
 
-export default function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
+  let response = intlMiddleware(request)
+  response = await updateSession(request, response)
+
+  const supabaseHosts = [process.env.NEXT_PUBLIC_SUPABASE_URL, 'https://*.supabase.co']
+    .filter(Boolean)
+    .join(' ')
+
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https:;
     font-src 'self';
-    connect-src 'self';
+    connect-src 'self' ${supabaseHosts};
     object-src 'none';
     base-uri 'self';
     form-action 'self';
@@ -22,8 +30,6 @@ export default function proxy(request: NextRequest) {
   `
     .replace(/\s{2,}/g, ' ')
     .trim()
-
-  const response = intlMiddleware(request)
 
   response.headers.set('Content-Security-Policy', cspHeader)
   response.headers.set('X-Content-Security-Policy', cspHeader)

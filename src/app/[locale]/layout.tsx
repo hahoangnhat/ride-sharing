@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
+import { Toaster } from 'sonner'
 
 type Props = {
   children: ReactNode
@@ -23,7 +24,12 @@ const LocaleLayout = async ({ children, params }: Props) => {
   // Enable static rendering
   setRequestLocale(locale)
 
-  return <NextIntlClientProvider locale={locale}>{children}</NextIntlClientProvider>
+  return (
+    <NextIntlClientProvider locale={locale}>
+      {children}
+      <Toaster />
+    </NextIntlClientProvider>
+  )
 }
 
 export default LocaleLayout

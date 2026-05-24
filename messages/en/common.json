@@ -1,3 +1,23 @@
 {
-  "say_hello": "Hello"
+  "say_hello": "Hello",
+  "auth": {
+    "labels": {
+      "email": "Email",
+      "password": "Password",
+      "confirm_password": "Confirm Password"
+    },
+    "placeholders": {
+      "email": "your@email.com",
+      "password": "••••••••"
+    },
+    "actions": {
+      "sign_in": "Sign in",
+      "signing_in": "Signing in...",
+      "sign_up": "Sign up",
+      "signing_up": "Signing up..."
+    },
+    "messages": {
+      "check_email_confirmation": "Check your email for the confirmation link."
+    }
+  }
 }
