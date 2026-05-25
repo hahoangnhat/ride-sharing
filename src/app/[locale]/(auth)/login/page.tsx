@@ -10,6 +10,7 @@ import { toast } from 'sonner'
 import { loginSchema, type LoginForm } from '@/schemas/auth'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 
 export default function LoginPage() {
   const tValidation = useTranslations('validation')
@@ -45,7 +46,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-md space-y-6 rounded-lg border p-6">
+      <Card className="w-full max-w-md p-4">
         <h1 className="text-2xl font-bold">{tCommon('auth.actions.sign_in')}</h1>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -89,7 +90,7 @@ export default function LoginPage() {
             {loading ? tCommon('auth.actions.signing_in') : tCommon('auth.actions.sign_in')}
           </Button>
         </form>
-      </div>
+      </Card>
     </div>
   )
 }
